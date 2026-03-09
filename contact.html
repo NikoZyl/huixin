@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>联系我们 - 辉信科技</title>
+    <link rel="icon" type="image/png" href="img/logo/logo64.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: #4D6BFF;
+            background-color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        header {
+            background-color: #FFFFFF;
+            color: #4D6BFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            height: 100px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+
+        header.hidden {
+            top: -110px;
+        }
+
+        header .logo img {
+            width: 230px;
+            height: 130px;
+        }
+
+        header nav {
+            font-size: 20px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        header nav a {
+            margin: 0 12px;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            padding: 35px 5px;
+        }
+
+        header nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: #FF7F3F;
+            transition: width 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #FF7F3F;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+        }
+
+        header nav a.active {
+            color: #FF7F3F;
+        }
+
+        header nav a.active::after {
+            width: 100%;
+        }
+
+        .tel {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #FF7F3F;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #4D6BFF;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+
+        @media(max-width:768px) {
+            header nav {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #FFFFFF;
+                position: absolute;
+                top: 100%;
+                left: 0;
+            }
+
+            header nav.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        .contact-wrapper {
+            min-height: calc(100vh - 200px);
+            padding: 80px 5% 100px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            grid-template-rows: auto auto;
+            gap: 40px;
+            position: relative;
+        }
+
+        .contact-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: 5%;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #FF7F3F 0%, rgba(255,127,63,0.2) 100%);
+            border-radius: 50% 20% 50% 20%;
+            z-index: -1;
+            transform: rotate(15deg);
+        }
+
+        .contact-info {
+            grid-row: 1 / 3;
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: sticky;
+            top: 150px;
+            height: fit-content;
+        }
+
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateX(10px);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: #4D6BFF;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #1b1d3c;
+        }
+
+        .info-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .info-content a {
+            color: #FF7F3F;
+            font-weight: 500;
+        }
+
+        .contact-title {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+        }
+
+        .contact-title h2 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #1b1d3c 0%, #4D6BFF 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .contact-title p {
+            font-size: 18px;
+            color: #666;
+            max-width: 500px;
+        }
+
+        .contact-form {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #1b1d3c;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF7F3F;
+            box-shadow: 0 0 0 3px rgba(255,127,63,0.1);
+        }
+
+        .form-group textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #FF7F3F;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #e66a2d;
+            transform: translateY(-2px);
+        }
+
+        .contact-map {
+            margin-top: 60px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            height: 400px;
+        }
+
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #backTop {
+            position: fixed;
+            right: 30px;
+            bottom: 100px;
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: #FF7F3F;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+        }
+
+        #backTop.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #backTop:hover {
+            background: #e66a2d;
+        }
+
+        footer {
+            background-color: #1b1d3c;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 50px 10% 20px 10%;
+            box-sizing: border-box;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .footer-column {
+            flex: 1 1 150px;
+            margin: 10px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-contact .phone-number {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .footer-contact .address {
+            font-size: 13px;
+        }
+
+        .footer-contact .emailaddress {
+            font-size: 13px;
+        }
+
+        .qrcode {
+            width: 100px;
+            height: 100px;
+        }
+
+        .footer-bottom {
+            text-align: left;
+            font-size: 12px;
+            color: #aaa;
+            margin: 0;
+            padding-left: 11%;
+            padding-top: 10px;
+        }
+
+        @media(max-width: 992px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 30px;
+            }
+
+            .contact-info {
+                grid-row: 2 / 3;
+                position: static;
+            }
+
+            .contact-title {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+            }
+
+            .contact-form {
+                grid-column: 1 / 2;
+                grid-row: 3 / 4;
+            }
+
+            .contact-title h2 {
+                font-size: 36px;
+            }
+
+            .contact-wrapper::before {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .contact-info {
+                padding: 30px 20px;
+            }
+
+            .contact-form {
+                padding: 30px 20px;
+            }
+
+            .info-card {
+                gap: 15px;
+            }
+
+            .info-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="logo"><img src="img/logo/logo-h-t-1.png" alt="主页导航栏logo"></div>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <a href="index.html">首页</a>
+            <a href="about.html">关于辉信</a>
+            <a href="services.html">辉信服务</a>
+            <a href="cases.html">产品案例</a>
+            <a href="news.html">新闻</a>
+            <a href="contact.html" class="active">联系我们</a>
+        </nav>
+        <div class="tel">
+            <div class="phone-icon">
+                <i class="fa-solid fa-phone" style="color: rgb(255, 127, 63);"></i>
+            </div>
+            <span>18221318431</span>
+        </div>
+    </header>
+
+    <div class="contact-wrapper">
+        <div class="contact-info">
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="info-content">
+                    <h3>电话咨询</h3>
+                    <p>工作时间：9:00-18:00（周一至周五）</p>
+                    <p><a href="tel:18221318431">18221318431</a></p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="info-content">
+                    <h3>公司地址</h3>
+                    <p>浙江省嘉兴市平湖市总商会大厦C座1201</p>
+                    <p>可预约上门洽谈</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="info-content">
+                    <h3>邮箱沟通</h3>
+                    <p>商务合作/技术咨询</p>
+                    <p><a href="mailto:chengxiaohui@huixininfo.com">chengxiaohui@huixininfo.com</a></p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
+                <div class="info-content">
+                    <h3>扫码联系</h3>
+                    <p>添加企业微信，一对一沟通</p>
+                    <img src="img/huixinqrcode.jpg" alt="企业微信二维码" style="width:120px;height:120px;margin-top:10px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧：标题 + 表单 -->
+        <div class="contact-title">
+            <h2>与辉信<br>共筑数字未来</h2>
+            <p>无论您有网站建设、定制开发还是行业解决方案的需求，我们都能为您提供专业的服务，填写表单，我们会尽快与您取得联系。</p>
+        </div>
+
+        <div class="contact-form">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">您的姓名</label>
+                    <input type="text" id="name" placeholder="请输入姓名" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <input type="tel" id="phone" placeholder="请输入手机号码" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">公司名称</label>
+                    <input type="text" id="company" placeholder="请输入公司名称（选填）">
+                </div>
+                <div class="form-group">
+                    <label for="message">需求描述</label>
+                    <textarea id="message" placeholder="请简要描述您的需求，我们会针对性解答..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">提交需求</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="contact-map" style="margin:0 5% 80px;">
+        <iframe src="https://surl.amap.com/vaRCG91pftr" allowfullscreen></iframe>
+    </div>
+
+    <button id="backTop">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h2>关于辉信</h2>
+                <a href="about.html">
+                    <ul>
+                        <li>我们是谁</li>
+                        <li>我们服务的客户</li>
+                        <li>我们的团队</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column">
+                <h2>辉信服务</h2>
+                <a href="services.html">
+                    <ul>
+                        <li>网站建设</li>
+                        <li>H5响应式 交互网站</li>
+                        <li>移动端 & 微网站定制</li>
+                        <li>服务流程</li>
+                        <li>行业解决方案</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column">
+                <h2>产品案例</h2>
+                <a href="cases.html">
+                    <ul>
+                        <li>移动微站</li>
+                        <li>平台电商</li>
+                        <li>HTML5</li>
+                        <li>企业网站</li>
+                        <li>加工制造</li>
+                        <li>酒店餐饮</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column">
+                <h2>辉信动态</h2>
+                <a href="news.html">
+                    <ul>
+                        <li>公司动态</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column footer-contact">
+                <a href="contact.html">
+                    <h2>联系我们</h2>
+                </a>
+                <p class="phone-number">18221318431</p>
+                <p class="address">浙江省嘉兴市平湖市总商会大厦C座1201</p>
+                <p class="emailaddress">chengxiaohui@huixininfo.com</p>
+                <img src="img/huixinqrcode.jpg" class="qrcode">
+            </div>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有
+        </div>
+    </footer>
+
+    <script>
+        // 原有交互逻辑复用
+        // 移动端折叠菜单
+        const hamburger = document.getElementById("hamburger");
+        const navMenu = document.getElementById("navMenu");
+        hamburger.onclick = () => { 
+            navMenu.classList.toggle("active"); 
+            hamburger.classList.toggle("active"); 
+        }
+        navMenu.querySelectorAll('a').forEach(link => { 
+            link.onclick = () => { 
+                if (window.innerWidth < 768) { 
+                    navMenu.classList.remove("active"); 
+                    hamburger.classList.remove("active"); 
+                } 
+            } 
+        });
+
+        // 导航栏滚动隐藏/显示
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            let currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // 返回顶部按钮
+        const backTop = document.getElementById("backTop");
+        window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+                backTop.classList.add("show");
+            } else {
+                backTop.classList.remove("show");
+            }
+        });
+        backTop.onclick = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        };
+
+        // 新增：表单提交逻辑（可对接后端）
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // 模拟提交成功
+            alert('您的需求已提交，我们会尽快与您联系！');
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>

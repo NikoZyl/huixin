@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>辉信科技</title>
+    <link rel="icon" type="image/png" href="img/logo/logo64.png">
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            color: #4D6BFF;
+            background-color: #FFFFFF;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 顶部导航 */
+        header {
+            background-color: #FFFFFF;
+            color: #4D6BFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            height: 100px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+
+        header.hidden {
+            top: -110px;
+        }
+
+        /* 向上滑动隐藏 */
+        header .logo img {
+            width: 230px;
+            height: 130px;
+        }
+
+        header nav {
+            font-size: 20px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        header nav a {
+            margin: 0 12px;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            padding: 35px 5px;
+        }
+
+        /* 下划线动画 */
+        header nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: #FF7F3F;
+            transition: width 0.3s ease;
+        }
+
+        /* 悬浮动画 */
+        header nav a:hover {
+            color: #FF7F3F;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+        }
+
+        /* 当前页面 */
+        header nav a.active {
+            color: #FF7F3F;
+        }
+
+        header nav a.active::after {
+            width: 100%;
+        }
+
+
+        .tel {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #FF7F3F;
+        }
+
+        /* 汉堡菜单 */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #4D6BFF;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+
+        /* 移动端 */
+        @media(max-width:768px) {
+            header nav {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #FFFFFF;
+                position: absolute;
+                top: 100%;
+                left: 0;
+            }
+
+            header nav.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* 返回顶部按钮 */
+        #backTop {
+            position: fixed;
+            right: 30px;
+            bottom: 100px;
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: #FF7F3F;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+            /* 默认隐藏 */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+        }
+
+        #backTop.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #backTop:hover {
+            background: #e66a2d;
+        }
+
+        footer {
+            background-color: #1b1d3c;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 50px 10% 20px 10%;
+            box-sizing: border-box;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .footer-column {
+            flex: 1 1 150px;
+            margin: 10px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-contact .phone-number {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .footer-contact .address {
+            font-size: 13px;
+        }
+
+        .footer-contact .emailaddress {
+            font-size: 13px;
+        }
+
+        .qrcode {
+            width: 100px;
+            height: 100px;
+        }
+
+        .footer-bottom {
+            text-align: left;
+            font-size: 12px;
+            color: #aaa;
+            margin: 0;
+            padding-left: 11%;
+            padding-top: 10px;
+        }
+
+        /* 响应式布局 */
+        @media(max-width:1024px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-column {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* ===== 服务页面 ===== */
+
+        .services-wrapper {
+            max-width: 1200px;
+            margin: 0 auto 80px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h1 {
+            font-size: 36px;
+            color: #4D6BFF;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        /* 服务卡片 */
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .service-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #eee;
+            transition: all .35s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .service-icon {
+            font-size: 34px;
+            color: #FF7F3F;
+            margin-bottom: 15px;
+        }
+
+        .service-item h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .service-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* 服务流程容器 */
+        .process-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .process-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .process-title h2 {
+            font-size: 32px;
+            color: #4D6BFF;
+        }
+
+        /* 流程容器 */
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            counter-reset: step;
+            gap: 20px;
+            /* 步骤间距 */
+        }
+
+        /* 每个步骤 */
+        .process-step {
+            position: relative;
+            background: linear-gradient(135deg, #4D6BFF, #1D47B1);
+            color: #fff;
+            padding: 20px 80px;
+            font-size: 14px;
+            border-radius: 12px;
+            /* 圆角方框 */
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            counter-increment: step;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background 0.3s ease;
+            min-width: 50px;
+        }
+
+        /* 编号 */
+        .process-step::before {
+            content: counter(step);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #FF7F3F;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* hover效果 */
+        .process-step:hover {
+            background: linear-gradient(135deg, #FF7F3F, #FF4F00);
+            transform: translateY(-5px);
+        }
+
+        /* 小屏幕垂直布局 */
+        @media(max-width:768px) {
+            .process-flow {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .process-step {
+                width: 100%;
+                margin-bottom: 20px;
+                padding-left: 50px;
+            }
+        }
+
+        /* 服务优势 */
+
+        .advantage-section {
+            margin-top: 100px;
+        }
+
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .advantage-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .advantage-item i {
+            font-size: 26px;
+            color: #FF7F3F;
+        }
+
+        .advantage-item h4 {
+            margin-bottom: 5px;
+        }
+
+        .advantage-item p {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="logo"><img src="img/logo/logo-h-t-1.png" alt="主页导航栏logo"></div>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <a href="index.html">首页</a>
+            <a href="about.html">关于辉信</a>
+            <a href="services.html" class="active">辉信服务</a>
+            <a href="cases.html">产品案例</a>
+            <a href="news.html">新闻</a>
+            <a href="contact.html">联系我们</a>
+        </nav>
+        <div class="tel">
+            <div class="phone-icon">
+                <i class="fa-solid fa-phone" style="color: rgb(255, 127, 63);"></i>
+            </div>
+            <span>18221318431</span>
+        </div>
+    </header>
+
+    <section class="services-wrapper">
+
+        <div class="section-title">
+            <h1>辉信服务</h1>
+            <p>Huixin Service</p>
+        </div>
+
+        <!-- 服务项目 -->
+
+        <section class="services-grid">
+
+            <article class="service-item">
+                <div class="service-icon">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <h3>高端网站建设</h3>
+                <p>
+                    根据企业品牌定位与市场需求，
+                    提供专业的网站策划、UI设计与系统开发，
+                    打造高品质企业官网与品牌展示平台。
+                </p>
+            </article>
+
+            <article class="service-item">
+                <div class="service-icon">
+                    <i class="fa-brands fa-weixin"></i>
+                </div>
+                <h3>小程序开发</h3>
+                <p>
+                    支持微信、支付宝、百度、抖音等平台小程序，
+                    快速构建企业线上服务入口，
+                    实现用户增长与业务转化。
+                </p>
+            </article>
+
+            <article class="service-item">
+                <div class="service-icon">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+                <h3>APP开发</h3>
+                <p>
+                    提供 iOS / Android 原生开发以及
+                    Vue跨端解决方案，
+                    构建稳定高效的移动应用系统。
+                </p>
+            </article>
+
+            <article class="service-item">
+                <div class="service-icon">
+                    <i class="fa-solid fa-industry"></i>
+                </div>
+                <h3>工业互联网</h3>
+                <p>
+                    结合MES系统与设备数据采集，
+                    实现生产管理数字化，
+                    提升企业效率与数据价值。
+                </p>
+            </article>
+
+        </section>
+
+
+        <!-- 服务流程 -->
+
+        <section class="process-section">
+
+            <div class="process-title">
+                <h2>服务流程</h2>
+            </div>
+
+            <div class="process-flow">
+                <div class="process-step">需求评估</div>
+                <div class="process-step">沟通分析</div>
+                <div class="process-step">项目规划</div>
+                <div class="process-step">UI设计</div>
+                <div class="process-step">程序开发</div>
+                <div class="process-step">测试上线</div>
+                <div class="process-step">售后维护</div>
+            </div>
+
+        </section>
+
+
+        <!-- 服务优势 -->
+
+        <section class="advantage-section">
+
+            <div class="process-title">
+                <h2>我们的优势</h2>
+            </div>
+
+            <div class="advantage-grid">
+
+                <div class="advantage-item">
+                    <i class="fa-solid fa-user-tie" style="padding: 50px 0 0 0;"></i>
+                    <div>
+                        <h4>专业团队</h4>
+                        <p>拥有经验丰富的设计师与开发工程师团队。</p>
+                    </div>
+                </div>
+
+                <div class="advantage-item">
+                    <i class="fa-solid fa-lightbulb" style="padding: 50px 0 0 0;"></i>
+                    <div>
+                        <h4>创新设计</h4>
+                        <p>注重用户体验与品牌视觉，打造差异化产品。</p>
+                    </div>
+                </div>
+
+                <div class="advantage-item">
+                    <i class="fa-solid fa-gear" style="padding: 50px 0 0 0;"></i>
+                    <div>
+                        <h4>技术可靠</h4>
+                        <p>采用成熟开发框架，保证系统稳定与扩展性。</p>
+                    </div>
+                </div>
+
+                <div class="advantage-item">
+                    <i class="fa-solid fa-headset" style="padding: 50px 0 0 0;"></i>
+                    <div>
+                        <h4>持续服务</h4>
+                        <p>提供长期技术支持与系统维护服务。</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+    <button id="backTop">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h2>关于辉信</h2>
+                <a href="about.html">
+                    <ul>
+                        <li>我们是谁</li>
+                        <li>我们服务的客户</li>
+                        <li>我们的团队</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column">
+                <h2>辉信服务</h2>
+                <a href="services.html">
+                    <ul>
+                        <li>网站建设</li>
+                        <li>H5响应式 交互网站</li>
+                        <li>移动端 & 微网站定制</li>
+                        <li>服务流程</li>
+                        <li>行业解决方案</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column">
+                <h2>产品案例</h2>
+                <a href="cases.html">
+                    <ul>
+                        <li>移动微站</li>
+                        <li>平台电商</li>
+                        <li>HTML5</li>
+                        <li>企业网站</li>
+                        <li>加工制造</li>
+                        <li>酒店餐饮</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column">
+                <h2>辉信动态</h2>
+                <a href="news.html">
+                    <ul>
+                        <li>公司动态</li>
+                    </ul>
+                </a>
+            </div>
+            <div class="footer-column footer-contact">
+                <a href="contact.html">
+                    <h2>联系我们</h2>
+                </a>
+                <p class="phone-number">18221318431</p>
+                <p class="address">浙江省嘉兴市平湖市总商会大厦C座1201</p>
+                <p class="emailaddress">chengxiaohui@huixininfo.com</p>
+                <img src="img/huixinqrcode.jpg" class="qrcode">
+            </div>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有
+        </div>
+    </footer>
+    <script>
+        // 移动端折叠菜单
+        const hamburger = document.getElementById("hamburger");
+        const navMenu = document.getElementById("navMenu");
+        hamburger.onclick = () => { navMenu.classList.toggle("active"); hamburger.classList.toggle("active"); }
+        navMenu.querySelectorAll('a').forEach(link => { link.onclick = () => { if (window.innerWidth < 768) { navMenu.classList.remove("active"); hamburger.classList.remove("active"); } } });
+
+        // 导航栏滚动隐藏/显示
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            let currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) { // 向下
+                header.classList.add('hidden');
+            } else { // 向上
+                header.classList.remove('hidden');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // 返回顶部按钮
+        const backTop = document.getElementById("backTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 300) {
+                backTop.classList.add("show");
+            } else {
+                backTop.classList.remove("show");
+            }
+        });
+
+        backTop.onclick = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        };
+    </script>
+</body>
+
+</html>

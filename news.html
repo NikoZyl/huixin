@@ -28,7 +28,7 @@
             transition: color 0.3s ease;
         }
 
-        /* 顶部导航 - 保留原有样式并优化 */
+        /* 顶部导航 */
         header {
             background-color: #FFFFFF;
             color: #4D6BFF;
@@ -42,12 +42,14 @@
             top: 0;
             z-index: 1000;
             transition: top 0.3s;
+            box-sizing: border-box;
         }
 
         header.hidden {
             top: -110px;
         }
 
+        /* 向上滑动隐藏 */
         header .logo img {
             width: 230px;
             height: 130px;
@@ -68,6 +70,7 @@
             padding: 35px 5px;
         }
 
+        /* 下划线动画 */
         header nav a::after {
             content: "";
             position: absolute;
@@ -79,6 +82,7 @@
             transition: width 0.3s ease;
         }
 
+        /* 悬浮动画 */
         header nav a:hover {
             color: #FF7F3F;
         }
@@ -87,6 +91,7 @@
             width: 100%;
         }
 
+        /* 当前页面 */
         header nav a.active {
             color: #FF7F3F;
         }
@@ -103,10 +108,14 @@
             color: #FF7F3F;
         }
 
+        /* 汉堡菜单 - 核心样式 */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
+            margin-right: 5px;
+            /* 确保菜单按钮在最上层 */
         }
 
         .hamburger div {
@@ -115,32 +124,108 @@
             background-color: #4D6BFF;
             margin: 4px 0;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
-        /* 移动端导航适配 */
+        /* 汉堡菜单点击动画 */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* 移动端 - 核心修复（解决遮挡问题） */
         @media(max-width:768px) {
-            header nav {
+
+            /* 重置header基础样式 */
+            header {
+                padding: 0 15px;
+                height: 80px;
+                /* 移动端降低导航栏高度 */
+                position: fixed;
+                /* 改为fixed，避免滚动时错位 */
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* 给body增加顶部间距，避免内容被fixed的header遮挡 */
+            body {
+                padding-top: 80px;
+            }
+
+            header .logo img {
+                width: 150px;
+                /* 移动端缩小logo */
+                height: 80px;
+            }
+
+            /* 隐藏默认电话 */
+            header .tel {
                 display: none;
+            }
+
+            /* 重置导航栏布局（核心：解决遮挡） */
+            header nav {
+                display: flex;
                 flex-direction: column;
                 width: 100%;
                 background: #FFFFFF;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                /* fixed定位，不脱离文档流但悬浮 */
+                top: 80px;
+                /* 对应header高度，避免覆盖头部 */
                 left: 0;
-                padding: 20px 0;
+                right: 0;
+                padding: 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                max-height: 0;
+                /* 初始高度为0，隐藏 */
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                /* 展开/收起动画 */
+                transform: translateX(0);
+                /* 重置居中偏移 */
+                transform: none;
             }
 
+            /* 导航展开状态 */
             header nav.active {
-                display: flex;
+                max-height: 500px;
+                /* 足够容纳所有导航项 */
             }
 
+            /* 移动端导航链接样式 */
             header nav a {
-                padding: 10px 20px;
+                display: block;
+                /* 改为块级元素 */
+                padding: 15px 20px;
+                /* 调整内边距，降低高度 */
                 margin: 0;
+                text-align: center;
+                border-bottom: 1px solid #f5f5f5;
             }
 
+            header nav a::after {
+                display: none;
+                /* 移动端隐藏下划线动画 */
+            }
+
+            /* 显示汉堡菜单 */
             .hamburger {
                 display: flex;
+            }
+
+            /* 导航展开时，给body增加额外间距，避免内容被遮挡 */
+            body.nav-active .banner {
+                padding-top: 10px;
+                /* 微调banner位置 */
             }
         }
 
@@ -634,11 +719,11 @@
                 <p class="phone-number">18221318431</p>
                 <p class="address">浙江省嘉兴市平湖市总商会大厦C座1201</p>
                 <p class="emailaddress">chengxiaohui@huixininfo.com</p>
-                <img src="img/huixinqrcode.jpg" class="qrcode">
+                <img src="img/qrcode.png" class="qrcode">
             </div>
         </div>
         <div class="footer-bottom">
-            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a> <a href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
         </div>
     </footer>
 
@@ -733,19 +818,6 @@ const newsList = document.querySelector('.news-list');
 const newsData = [
     // 第1页数据
     [newsCards[0], newsCards[1], newsCards[2], newsCards[3], newsCards[4], newsCards[5]],
-    // 第2页模拟数据
-    [
-        createNewsCard('公司动态', '辉信科技与某知名企业达成战略合作', '近日，辉信科技与长三角某头部制造企业达成战略合作，共同推进数字化工厂建设...', '2024-06-01', '890'),
-        createNewsCard('技术前沿', 'AI赋能网站开发 效率提升50%', '辉信科技引入AI辅助开发工具，可自动生成基础代码，网站开发周期缩短50%...', '2024-05-28', '785'),
-        createNewsCard('行业资讯', '2024企业数字化转型率同比提升25%', '据行业报告显示，2024年中小企业数字化转型率同比提升25%，数字化需求激增...', '2024-05-20', '650')
-    ],
-    // 第3页模拟数据
-    [
-        createNewsCard('公司动态', '辉信科技入选「嘉兴数字经济创新企业」', '辉信科技凭借优秀的数字化解决方案，入选2024嘉兴数字经济创新企业榜单...', '2024-04-30', '920'),
-        createNewsCard('技术前沿', '响应式网站适配技术升级 兼容更多设备', '辉信科技升级响应式网站适配引擎，可兼容99%以上的移动设备，适配效率提升40%...', '2024-04-20', '680')
-    ],
-    [],
-    []
 ];
 
 // 生成新闻卡片的辅助函数

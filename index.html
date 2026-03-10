@@ -109,6 +109,7 @@
             flex-direction: column;
             cursor: pointer;
             z-index: 1001;
+            margin-right: 5px;
             /* 确保菜单按钮在最上层 */
         }
 
@@ -326,7 +327,6 @@
             transition: transform 0.4s ease, color 0.4s ease;
         }
 
-        /* 标题和文字 */
         .service-card h3 {
             color: #4D6BFF;
             margin-bottom: 10px;
@@ -339,7 +339,6 @@
             line-height: 1.6;
         }
 
-        /* 悬停效果 */
         .card-hover:hover {
             transform: translateY(-10px) scale(1.03);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
@@ -349,7 +348,6 @@
             transform: scale(1.2) rotate(5deg);
         }
 
-        /* 卡片布局 */
         .services {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -360,7 +358,6 @@
             box-sizing: border-box;
         }
 
-        /* 移动端调整 */
         @media(max-width: 1024px) {
             .services {
                 grid-template-columns: repeat(2, 1fr);
@@ -374,7 +371,6 @@
                 grid-template-columns: 1fr;
             }
 
-            /* 移动端banner高度适配 */
             .banner {
                 height: 300px;
             }
@@ -393,13 +389,11 @@
             }
         }
 
-        /* 案例区整体 */
         .cases {
             padding: 0 30px 0 30px;
             background: #ffffff;
         }
 
-        /* 标题 */
         .cases-title {
             text-align: center;
             margin-bottom: 50px;
@@ -415,7 +409,6 @@
             color: #666;
         }
 
-        /* 案例网格 */
         .cases-grid {
             max-width: 1200px;
             margin: auto;
@@ -424,7 +417,6 @@
             gap: 25px;
         }
 
-        /* 案例卡片 */
         .case-card {
             position: relative;
             overflow: hidden;
@@ -432,19 +424,16 @@
             cursor: pointer;
         }
 
-        /* 图片 */
         .case-card img {
             width: 100%;
             display: block;
             transition: transform 0.5s ease;
         }
 
-        /* hover 图片放大 */
         .case-card:hover img {
             transform: scale(1.1);
         }
 
-        /* 遮罩 */
         .case-overlay {
             position: absolute;
             left: 0;
@@ -459,12 +448,10 @@
             transition: opacity 0.4s ease;
         }
 
-        /* hover出现 */
         .case-card:hover .case-overlay {
             opacity: 1;
         }
 
-        /* 文字 */
         .case-overlay h3 {
             color: white;
             font-size: 20px;
@@ -476,14 +463,12 @@
             transform: translateY(0);
         }
 
-        /* 平板 */
         @media(max-width:1024px) {
             .cases-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* 手机 */
         @media(max-width:768px) {
             .cases-grid {
                 grid-template-columns: 1fr;
@@ -494,14 +479,12 @@
             }
         }
 
-        /* 案例按钮区域 */
         .cases-more {
             display: flex;
             justify-content: center;
             margin: 50px 0 80px 0;
         }
 
-        /* 圆形按钮 */
         .cases-btn {
             width: 60px;
             height: 60px;
@@ -516,7 +499,6 @@
             transition: all 0.3s ease;
         }
 
-        /* 悬停效果 */
         .cases-btn:hover {
             background-color: #4D6BFF;
             border-color: #4D6BFF;
@@ -1382,15 +1364,15 @@
                 <p class="emailaddress">
                     chengxiaohui@huixininfo.com
                 </p>
-                <img class="qrcode" src="img/qrcode.png" />
+                <img class="qrcode" src="img/qrcode.png">
             </div>
         </div>
         <div class="footer-bottom">
-            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a> <a href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a>
+            <a href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
         </div>
     </footer>
     <script>
-        // Banner轮播
         let slides = document.querySelectorAll('.banner-slide');
         let current = 0;
         document.getElementById('next').onclick = () => changeSlide(1);
@@ -1402,22 +1384,18 @@
         }
         setInterval(() => changeSlide(1), 5000);
 
-        // 移动端折叠菜单 - 核心修复（解决遮挡+优化交互）
         const hamburger = document.getElementById("hamburger");
         const navMenu = document.getElementById("navMenu");
         const body = document.body;
         const header = document.getElementById('header');
 
-        // 汉堡菜单点击事件（含动画+body类名控制）
         hamburger.addEventListener('click', (event) => {
             navMenu.classList.toggle("active");
             hamburger.classList.toggle("active");
             body.classList.toggle("nav-active");
-            // 阻止事件冒泡
             event.stopPropagation();
         });
 
-        // 点击导航链接关闭菜单
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth < 768) {
@@ -1428,7 +1406,6 @@
             });
         });
 
-        // 点击页面其他区域关闭菜单
         document.addEventListener('click', (e) => {
             if (window.innerWidth < 768) {
                 if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
@@ -1439,27 +1416,22 @@
             }
         });
 
-        // 窗口大小变化时重置菜单状态
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768) {
                 navMenu.classList.remove("active");
                 hamburger.classList.remove("active");
                 body.classList.remove("nav-active");
-                // 恢复PC端header样式
                 header.style.position = 'sticky';
                 body.style.paddingTop = '0';
             } else {
-                // 确保移动端header是fixed
                 header.style.position = 'fixed';
                 body.style.paddingTop = '80px';
             }
         });
 
-        // 导航栏滚动隐藏/显示（适配移动端）
         let lastScroll = 0;
         window.addEventListener('scroll', () => {
             let currentScroll = window.pageYOffset;
-            // 修复滚动时菜单收起
             if (currentScroll > lastScroll && currentScroll > 100) {
                 header.classList.add('hidden');
                 navMenu.classList.remove("active");
@@ -1471,7 +1443,6 @@
             lastScroll = currentScroll;
         });
 
-        // 返回顶部按钮
         const backTop = document.getElementById("backTop");
         window.addEventListener("scroll", () => {
             if (window.pageYOffset > 300) {
@@ -1488,7 +1459,6 @@
             });
         });
 
-        // 初始化：确保移动端加载时样式正确
         window.addEventListener('load', () => {
             if (window.innerWidth < 768) {
                 header.style.position = 'fixed';

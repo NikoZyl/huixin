@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,12 @@
     <title>辉信科技</title>
     <link rel="icon" type="image/png" href="img/logo/logo64.png">
     <style>
-        /* 全局样式 */
+        /* ===== 全局 ===== */
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
             color: #4D6BFF;
             background-color: #FFFFFF;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
         a {
@@ -20,7 +21,7 @@
             color: inherit;
         }
 
-        /* 顶部导航 */
+        /* ===== 顶部导航 ===== */
         header {
             background-color: #FFFFFF;
             color: #4D6BFF;
@@ -34,6 +35,7 @@
             top: 0;
             z-index: 1000;
             transition: top 0.3s;
+            box-sizing: border-box;
         }
 
         header.hidden {
@@ -60,7 +62,6 @@
             padding: 35px 5px;
         }
 
-        /* 下划线动画 */
         header nav a::after {
             content: "";
             position: absolute;
@@ -69,10 +70,9 @@
             width: 0;
             height: 3px;
             background: #FF7F3F;
-            transition: width 0.3s ease;
+            transition: width .3s ease;
         }
 
-        /* 悬浮动画 */
         header nav a:hover {
             color: #FF7F3F;
         }
@@ -81,7 +81,6 @@
             width: 100%;
         }
 
-        /* 当前页面 */
         header nav a.active {
             color: #FF7F3F;
         }
@@ -103,6 +102,7 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
         }
 
         .hamburger div {
@@ -111,22 +111,74 @@
             background-color: #4D6BFF;
             margin: 4px 0;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
-        /* 移动端 */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* ===== 移动端导航 ===== */
         @media(max-width:768px) {
-            header nav {
+            header {
+                padding: 0 15px;
+                height: 80px;
+                position: fixed;
+                width: 100%;
+            }
+
+            body {
+                padding-top: 80px;
+            }
+
+            header .logo img {
+                width: 150px;
+                height: 80px;
+            }
+
+            header .tel {
                 display: none;
+            }
+
+            header nav {
+                display: flex;
                 flex-direction: column;
                 width: 100%;
-                background: #FFFFFF;
-                position: absolute;
-                top: 100%;
+                background: #fff;
+                position: fixed;
+                top: 80px;
                 left: 0;
+                right: 0;
+                padding: 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height .3s ease;
             }
 
             header nav.active {
-                display: flex;
+                max-height: 500px;
+            }
+
+            header nav a {
+                display: block;
+                padding: 15px 20px;
+                margin: 0;
+                text-align: center;
+                border-bottom: 1px solid #f5f5f5;
+            }
+
+            header nav a::after {
+                display: none;
             }
 
             .hamburger {
@@ -134,7 +186,7 @@
             }
         }
 
-        /* 返回顶部按钮 */
+        /* ===== 返回顶部 ===== */
         #backTop {
             position: fixed;
             right: 30px;
@@ -151,11 +203,11 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            /* 默认隐藏 */
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+            transition: opacity .4s ease, transform .4s ease;
+            z-index: 9999;
         }
 
         #backTop.show {
@@ -168,166 +220,132 @@
             background: #e66a2d;
         }
 
-        /* 案例页面核心样式 */
-        .case-banner {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #4D6BFF 0%, #1b1d3c 100%);
+        /* ===== 案例 Hero Banner ===== */
+        .case-hero {
+            height: 420px;
+            background: linear-gradient(135deg, #4D6BFF, #1b1d3c);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-hero::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #6f85ff, transparent);
+            top: -200px;
+            left: -200px;
+            opacity: .3;
+        }
+
+        .case-hero::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff7f3f, transparent);
+            bottom: -200px;
+            right: -200px;
+            opacity: .25;
+        }
+
+        .hero-content {
             text-align: center;
-            margin-bottom: 60px;
+            color: #fff;
+            z-index: 2;
         }
 
-        .case-banner h1 {
-            font-size: 48px;
+        .hero-content h1 {
+            font-size: 60px;
+            letter-spacing: 4px;
             margin: 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .case-banner p {
+        .hero-content p {
             font-size: 18px;
-            margin-top: 15px;
-            opacity: 0.9;
+            margin-top: 10px;
+            opacity: .9;
         }
 
+        /* ===== 案例区 ===== */
         .case-container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 80px;
+            margin: -120px auto 80px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 5;
         }
 
-        /* 案例卡片网格 - 修改为一行四个 */
         .case-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 固定一行四个 */
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
         }
 
         .case-card {
             background: #fff;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+            transition: .35s;
+            transform: rotate(-1deg);
         }
 
-        .case-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .case-card:nth-child(even) {
+            transform: rotate(1deg);
         }
 
-        .case-img {
+        .case-card img {
             width: 100%;
-            height: 220px;
-            object-fit: cover;
             display: block;
         }
 
-        .case-content {
-            padding: 20px;
-        }
-
-        .case-category {
-            display: inline-block;
-            font-size: 12px;
-            padding: 5px 10px;
-            background: #f0f5ff;
-            color: #4D6BFF;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
-        .case-title {
-            font-size: 20px;
-            margin: 0 0 10px;
-            color: #1b1d3c;
-            font-weight: bold;
-        }
-
-        .case-desc {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0 0 15px;
-        }
-
-        .case-link {
-            display: inline-block;
-            color: #FF7F3F;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .case-link i {
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .case-link:hover i {
-            transform: translateX(5px);
-        }
-
-        /* 空状态提示（保留但隐藏，因删除了筛选功能） */
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-            color: #999;
-            display: none;
-        }
-
-        .empty-state i {
-            font-size: 60px;
-            margin-bottom: 20px;
-            color: #ddd;
-        }
-
-        .empty-state h3 {
-            font-size: 24px;
-            margin: 0 0 10px;
-            color: #666;
-        }
-
-        .empty-state p {
+        .case-card h3 {
             font-size: 16px;
-            margin: 0;
+            margin: 15px;
+            color: #1b1d3c;
         }
 
-        /* 响应式调整 */
-        @media(max-width: 1024px) {
-            .case-banner {
-                height: 300px;
-            }
-            .case-banner h1 {
-                font-size: 36px;
-            }
-            /* 平板端调整为一行两个 */
+        .case-card:hover {
+            transform: translateY(-12px) rotate(0deg);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .2);
+        }
+
+        /* ===== 响应式 ===== */
+        @media(max-width:1024px) {
             .case-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .hero-content h1 {
+                font-size: 42px;
+            }
         }
 
-        @media(max-width: 768px) {
-            .case-banner {
-                height: 250px;
-                padding: 0 20px;
-            }
-            .case-banner h1 {
-                font-size: 28px;
-            }
-            /* 移动端调整为一行一个 */
+        @media(max-width:768px) {
             .case-grid {
                 grid-template-columns: 1fr;
             }
+
+            .case-container {
+                margin-top: -80px;
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
         }
 
+        /* ===== footer ===== */
         footer {
             background-color: #1b1d3c;
-            color: #ffffff;
+            color: #fff;
             font-size: 14px;
-            padding: 50px 10% 20px 10%;
+            padding: 50px 10% 20px;
             box-sizing: border-box;
         }
 
@@ -335,7 +353,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
-            margin: 0 auto;
+            margin: auto;
             max-width: 1200px;
         }
 
@@ -344,12 +362,6 @@
             margin: 10px;
         }
 
-        .footer-column h4 {
-            margin-bottom: 15px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
         .footer-column h2 {
             font-size: 18px;
             margin-bottom: 15px;
@@ -371,10 +383,7 @@
             margin: 5px 0;
         }
 
-        .footer-contact .address {
-            font-size: 13px;
-        }
-
+        .footer-contact .address,
         .footer-contact .emailaddress {
             font-size: 13px;
         }
@@ -393,7 +402,6 @@
             padding-top: 10px;
         }
 
-        /* 响应式布局 */
         @media(max-width:1024px) {
             .footer-container {
                 flex-direction: column;
@@ -407,6 +415,7 @@
         }
     </style>
 </head>
+
 <body>
     <header id="header">
         <div class="logo"><img src="img/logo/logo-h-t-1.png" alt="主页导航栏logo"></div>
@@ -431,107 +440,61 @@
         </div>
     </header>
 
-    <!-- 案例页面横幅 -->
-    <section class="case-banner">
-        <div>
-            <h1>产品案例</h1>
-            <p>专注高品质网站建设，打造行业标杆案例</p>
+    <section class="case-hero">
+
+        <div class="hero-content">
+            <h1>辉信案例</h1>
+            <p>精选案例 · 打造高品质数字产品</p>
         </div>
+
     </section>
 
-    <!-- 案例内容区 -->
     <section class="case-container">
-        <!-- 删除了筛选按钮区域 -->
 
-        <!-- 案例网格 - 增加到8个案例 -->
-        <div class="case-grid" id="caseGrid">
-            <!-- 案例1 -->
+        <div class="case-grid">
+
             <div class="case-card">
-                <img src="img/cases/case1.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">房产系统</h3>
-                    <p class="case-desc">为科技企业打造轻量化移动端官网，适配全机型，加载速度提升60%，用户留存率提高35%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case1.png">
+                <h3>房产系统</h3>
             </div>
 
-            <!-- 案例2 -->
             <div class="case-card">
-                <img src="img/cases/case2.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">教育系统</h3>
-                    <p class="case-desc">集下单、支付、配送、售后于一体的生鲜电商平台，支持多商户入驻，订单处理效率提升80%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case2.png">
+                <h3>教育系统</h3>
             </div>
 
-            <!-- 案例3 -->
             <div class="case-card">
-                <img src="img/cases/case3.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">预约咨询小程序</h3>
-                    <p class="case-desc">创意互动H5页面，融合动画、交互、表单等元素，活动参与量突破10万+，品牌曝光提升200%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case3.png">
+                <h3>预约咨询小程序</h3>
             </div>
 
-            <!-- 案例4 -->
             <div class="case-card">
-                <img src="img/cases/case4.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">招聘SAAS</h3>
-                    <p class="case-desc">为传统制造企业打造现代化企业官网，突出产品展示与企业实力，询盘量提升50%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case4.png">
+                <h3>招聘SAAS</h3>
             </div>
 
-            <!-- 案例5 -->
             <div class="case-card">
-                <img src="img/cases/case5.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">答题考试系统</h3>
-                    <p class="case-desc">3D产品展示+在线询价的加工制造行业解决方案，客户转化率提升45%，沟通成本降低30%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case5.png">
+                <h3>答题考试系统</h3>
             </div>
 
-            <!-- 案例6 -->
             <div class="case-card">
-                <img src="img/cases/case6.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">活动报名表单系统</h3>
-                    <p class="case-desc">集品牌展示、门店查询、在线预订、会员中心于一体的餐饮品牌官网，到店消费提升60%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case6.png">
+                <h3>活动报名系统</h3>
             </div>
 
-            <!-- 案例7 -->
             <div class="case-card">
-                <img src="img/cases/case7.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">球馆订场小程序</h3>
-                    <p class="case-desc">为医疗机构打造移动端服务平台，支持在线挂号、报告查询、医生咨询，用户体验提升70%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case7.png">
+                <h3>球馆订场系统</h3>
             </div>
 
-            <!-- 案例8 -->
             <div class="case-card">
-                <img src="img/cases/case8.png" class="case-img">
-                <div class="case-content">
-                    <h3 class="case-title">CRM客户关系管理系统</h3>
-                    <p class="case-desc">为中小企业打造一体化智能办公平台，集成考勤、审批、协作功能，办公效率提升65%。</p>
-                    <a href="contact.html" class="case-link">了解详情 <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <img src="img/cases/case8.png">
+                <h3>CRM客户系统</h3>
             </div>
+
         </div>
 
-        <!-- 空状态（保留但默认隐藏） -->
-        <div class="empty-state" id="emptyState">
-            <i class="fa-solid fa-box-open"></i>
-            <h3>暂无相关案例</h3>
-            <p>换个分类看看吧～</p>
-        </div>
     </section>
 
     <button id="backTop">
@@ -590,45 +553,43 @@
                 <p class="phone-number">18221318431</p>
                 <p class="address">浙江省嘉兴市平湖市总商会大厦C座1201</p>
                 <p class="emailaddress">chengxiaohui@huixininfo.com</p>
-                <img src="img/huixinqrcode.jpg" class="qrcode">
+                <img src="img/qrcode.png" class="qrcode">
             </div>
         </div>
         <div class="footer-bottom">
-            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a> <a
+                href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
         </div>
     </footer>
 
     <script>
-        // 移动端折叠菜单
         const hamburger = document.getElementById("hamburger");
         const navMenu = document.getElementById("navMenu");
-        hamburger.onclick = () => { 
-            navMenu.classList.toggle("active"); 
-            hamburger.classList.toggle("active"); 
+        hamburger.onclick = () => {
+            navMenu.classList.toggle("active");
+            hamburger.classList.toggle("active");
         }
-        navMenu.querySelectorAll('a').forEach(link => { 
-            link.onclick = () => { 
-                if (window.innerWidth < 768) { 
-                    navMenu.classList.remove("active"); 
-                    hamburger.classList.remove("active"); 
-                } 
-            } 
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.onclick = () => {
+                if (window.innerWidth < 768) {
+                    navMenu.classList.remove("active");
+                    hamburger.classList.remove("active");
+                }
+            }
         });
 
-        // 导航栏滚动隐藏/显示
         let lastScroll = 0;
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
             let currentScroll = window.pageYOffset;
-            if (currentScroll > lastScroll && currentScroll > 100) { // 向下
+            if (currentScroll > lastScroll && currentScroll > 100) {
                 header.classList.add('hidden');
-            } else { // 向上
+            } else {
                 header.classList.remove('hidden');
             }
             lastScroll = currentScroll;
         });
 
-        // 返回顶部按钮
         const backTop = document.getElementById("backTop");
         window.addEventListener("scroll", () => {
             if (window.pageYOffset > 300) {
@@ -643,8 +604,7 @@
                 behavior: "smooth"
             });
         };
-
-        // 删除了筛选功能相关的JS代码
     </script>
 </body>
+
 </html>

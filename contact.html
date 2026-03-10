@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>联系我们 - 辉信科技</title>
     <link rel="icon" type="image/png" href="img/logo/logo64.png">
     <style>
+        /* ---------- 全局 ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -24,6 +26,8 @@
             color: inherit;
         }
 
+        /* ---------- header ---------- */
+        /* 顶部导航 */
         header {
             background-color: #FFFFFF;
             color: #4D6BFF;
@@ -37,12 +41,14 @@
             top: 0;
             z-index: 1000;
             transition: top 0.3s;
+            box-sizing: border-box;
         }
 
         header.hidden {
             top: -110px;
         }
 
+        /* 向上滑动隐藏 */
         header .logo img {
             width: 230px;
             height: 130px;
@@ -63,6 +69,7 @@
             padding: 35px 5px;
         }
 
+        /* 下划线动画 */
         header nav a::after {
             content: "";
             position: absolute;
@@ -74,6 +81,7 @@
             transition: width 0.3s ease;
         }
 
+        /* 悬浮动画 */
         header nav a:hover {
             color: #FF7F3F;
         }
@@ -82,6 +90,7 @@
             width: 100%;
         }
 
+        /* 当前页面 */
         header nav a.active {
             color: #FF7F3F;
         }
@@ -98,10 +107,14 @@
             color: #FF7F3F;
         }
 
+        /* 汉堡菜单 - 核心样式 */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
+            margin-right: 5px;
+            /* 确保菜单按钮在最上层 */
         }
 
         .hamburger div {
@@ -110,28 +123,112 @@
             background-color: #4D6BFF;
             margin: 4px 0;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
+        /* 汉堡菜单点击动画 */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* 移动端 - 核心修复（解决遮挡问题） */
         @media(max-width:768px) {
-            header nav {
+
+            /* 重置header基础样式 */
+            header {
+                padding: 0 15px;
+                height: 80px;
+                /* 移动端降低导航栏高度 */
+                position: fixed;
+                /* 改为fixed，避免滚动时错位 */
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* 给body增加顶部间距，避免内容被fixed的header遮挡 */
+            body {
+                padding-top: 80px;
+            }
+
+            header .logo img {
+                width: 150px;
+                /* 移动端缩小logo */
+                height: 80px;
+            }
+
+            /* 隐藏默认电话 */
+            header .tel {
                 display: none;
+            }
+
+            /* 重置导航栏布局（核心：解决遮挡） */
+            header nav {
+                display: flex;
                 flex-direction: column;
                 width: 100%;
                 background: #FFFFFF;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                /* fixed定位，不脱离文档流但悬浮 */
+                top: 80px;
+                /* 对应header高度，避免覆盖头部 */
                 left: 0;
+                right: 0;
+                padding: 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                max-height: 0;
+                /* 初始高度为0，隐藏 */
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                /* 展开/收起动画 */
+                transform: translateX(0);
+                /* 重置居中偏移 */
+                transform: none;
             }
 
+            /* 导航展开状态 */
             header nav.active {
-                display: flex;
+                max-height: 500px;
+                /* 足够容纳所有导航项 */
             }
 
+            /* 移动端导航链接样式 */
+            header nav a {
+                display: block;
+                /* 改为块级元素 */
+                padding: 15px 20px;
+                /* 调整内边距，降低高度 */
+                margin: 0;
+                text-align: center;
+                border-bottom: 1px solid #f5f5f5;
+            }
+
+            header nav a::after {
+                display: none;
+                /* 移动端隐藏下划线动画 */
+            }
+
+            /* 显示汉堡菜单 */
             .hamburger {
                 display: flex;
             }
+
+            /* 导航展开时，给body增加额外间距，避免内容被遮挡 */
+            body.nav-active .banner {
+                padding-top: 10px;
+                /* 微调banner位置 */
+            }
         }
 
+        /* ---------- 联系区域 ---------- */
         .contact-wrapper {
             min-height: calc(100vh - 200px);
             padding: 80px 5% 100px;
@@ -149,18 +246,19 @@
             right: 5%;
             width: 300px;
             height: 300px;
-            background: linear-gradient(135deg, #FF7F3F 0%, rgba(255,127,63,0.2) 100%);
+            background: linear-gradient(135deg, #FF7F3F 0%, rgba(255, 127, 63, 0.2) 100%);
             border-radius: 50% 20% 50% 20%;
             z-index: -1;
             transform: rotate(15deg);
         }
 
+        /* ---------- 联系信息 ---------- */
         .contact-info {
             grid-row: 1 / 3;
             background: #fff;
             padding: 50px 40px;
             border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             gap: 40px;
@@ -210,6 +308,7 @@
             font-weight: 500;
         }
 
+        /* ---------- 标题 ---------- */
         .contact-title {
             grid-column: 2 / 3;
             grid-row: 1 / 2;
@@ -231,13 +330,14 @@
             max-width: 500px;
         }
 
+        /* ---------- 表单 ---------- */
         .contact-form {
             grid-column: 2 / 3;
             grid-row: 2 / 3;
             background: #fff;
             padding: 50px 40px;
             border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         .form-group {
@@ -265,7 +365,7 @@
         .form-group textarea:focus {
             outline: none;
             border-color: #FF7F3F;
-            box-shadow: 0 0 0 3px rgba(255,127,63,0.1);
+            box-shadow: 0 0 0 3px rgba(255, 127, 63, 0.1);
         }
 
         .form-group textarea {
@@ -290,11 +390,12 @@
             transform: translateY(-2px);
         }
 
+        /* ---------- 地图 ---------- */
         .contact-map {
             margin-top: 60px;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             height: 400px;
         }
 
@@ -304,6 +405,7 @@
             border: none;
         }
 
+        /* ---------- 返回顶部 ---------- */
         #backTop {
             position: fixed;
             right: 30px;
@@ -336,6 +438,7 @@
             background: #e66a2d;
         }
 
+        /* ---------- footer ---------- */
         footer {
             background-color: #1b1d3c;
             color: #ffffff;
@@ -379,10 +482,7 @@
             margin: 5px 0;
         }
 
-        .footer-contact .address {
-            font-size: 13px;
-        }
-
+        .footer-contact .address,
         .footer-contact .emailaddress {
             font-size: 13px;
         }
@@ -401,6 +501,7 @@
             padding-top: 10px;
         }
 
+        /* ---------- 响应式调整 ---------- */
         @media(max-width: 992px) {
             .contact-wrapper {
                 grid-template-columns: 1fr;
@@ -434,10 +535,8 @@
         }
 
         @media(max-width: 768px) {
-            .contact-info {
-                padding: 30px 20px;
-            }
 
+            .contact-info,
             .contact-form {
                 padding: 30px 20px;
             }
@@ -454,6 +553,7 @@
         }
     </style>
 </head>
+
 <body>
     <header id="header">
         <div class="logo"><img src="img/logo/logo-h-t-1.png" alt="主页导航栏logo"></div>
@@ -520,7 +620,7 @@
                 <div class="info-content">
                     <h3>扫码联系</h3>
                     <p>添加企业微信，一对一沟通</p>
-                    <img src="img/huixinqrcode.jpg" alt="企业微信二维码" style="width:120px;height:120px;margin-top:10px;">
+                    <img src="img/qrcode.png" alt="企业微信二维码" style="width:120px;height:120px;margin-top:10px;">
                 </div>
             </div>
         </div>
@@ -618,7 +718,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a> <a
+                href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
         </div>
     </footer>
 
@@ -627,17 +728,17 @@
         // 移动端折叠菜单
         const hamburger = document.getElementById("hamburger");
         const navMenu = document.getElementById("navMenu");
-        hamburger.onclick = () => { 
-            navMenu.classList.toggle("active"); 
-            hamburger.classList.toggle("active"); 
+        hamburger.onclick = () => {
+            navMenu.classList.toggle("active");
+            hamburger.classList.toggle("active");
         }
-        navMenu.querySelectorAll('a').forEach(link => { 
-            link.onclick = () => { 
-                if (window.innerWidth < 768) { 
-                    navMenu.classList.remove("active"); 
-                    hamburger.classList.remove("active"); 
-                } 
-            } 
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.onclick = () => {
+                if (window.innerWidth < 768) {
+                    navMenu.classList.remove("active");
+                    hamburger.classList.remove("active");
+                }
+            }
         });
 
         // 导航栏滚动隐藏/显示
@@ -679,4 +780,5 @@
         });
     </script>
 </body>
+
 </html>

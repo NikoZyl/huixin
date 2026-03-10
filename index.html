@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -12,6 +13,9 @@
             margin: 0;
             color: #4D6BFF;
             background-color: #FFFFFF;
+            transition: padding-top 0.3s ease;
+            /* 新增：body间距过渡 */
+            overflow-x: hidden;
         }
 
         a {
@@ -33,6 +37,7 @@
             top: 0;
             z-index: 1000;
             transition: top 0.3s;
+            box-sizing: border-box;
         }
 
         header.hidden {
@@ -90,7 +95,6 @@
             width: 100%;
         }
 
-
         .tel {
             display: flex;
             align-items: center;
@@ -99,11 +103,13 @@
             color: #FF7F3F;
         }
 
-        /* 汉堡菜单 */
+        /* 汉堡菜单 - 核心样式 */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
+            /* 确保菜单按钮在最上层 */
         }
 
         .hamburger div {
@@ -112,26 +118,108 @@
             background-color: #4D6BFF;
             margin: 4px 0;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
-        /* 移动端 */
+        /* 汉堡菜单点击动画 */
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* 移动端 - 核心修复（解决遮挡问题） */
         @media(max-width:768px) {
-            header nav {
+
+            /* 重置header基础样式 */
+            header {
+                padding: 0 15px;
+                height: 80px;
+                /* 移动端降低导航栏高度 */
+                position: fixed;
+                /* 改为fixed，避免滚动时错位 */
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* 给body增加顶部间距，避免内容被fixed的header遮挡 */
+            body {
+                padding-top: 80px;
+            }
+
+            header .logo img {
+                width: 150px;
+                /* 移动端缩小logo */
+                height: 80px;
+            }
+
+            /* 隐藏默认电话 */
+            header .tel {
                 display: none;
+            }
+
+            /* 重置导航栏布局（核心：解决遮挡） */
+            header nav {
+                display: flex;
                 flex-direction: column;
                 width: 100%;
                 background: #FFFFFF;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                /* fixed定位，不脱离文档流但悬浮 */
+                top: 80px;
+                /* 对应header高度，避免覆盖头部 */
                 left: 0;
+                right: 0;
+                padding: 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+                max-height: 0;
+                /* 初始高度为0，隐藏 */
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                /* 展开/收起动画 */
+                transform: translateX(0);
+                /* 重置居中偏移 */
+                transform: none;
             }
 
+            /* 导航展开状态 */
             header nav.active {
-                display: flex;
+                max-height: 500px;
+                /* 足够容纳所有导航项 */
             }
 
+            /* 移动端导航链接样式 */
+            header nav a {
+                display: block;
+                /* 改为块级元素 */
+                padding: 15px 20px;
+                /* 调整内边距，降低高度 */
+                margin: 0;
+                text-align: center;
+                border-bottom: 1px solid #f5f5f5;
+            }
+
+            header nav a::after {
+                display: none;
+                /* 移动端隐藏下划线动画 */
+            }
+
+            /* 显示汉堡菜单 */
             .hamburger {
                 display: flex;
+            }
+
+            /* 导航展开时，给body增加额外间距，避免内容被遮挡 */
+            body.nav-active .banner {
+                padding-top: 10px;
+                /* 微调banner位置 */
             }
         }
 
@@ -145,8 +233,9 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            transition: padding-top 0.3s ease;
+            /* 过渡动画 */
         }
-
 
         .banner button {
             background-color: #FF7F3F;
@@ -274,8 +363,33 @@
         /* 移动端调整 */
         @media(max-width: 1024px) {
             .services {
+                grid-template-columns: repeat(2, 1fr);
                 justify-content: center;
                 margin: 50px 10px;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            /* 移动端banner高度适配 */
+            .banner {
+                height: 300px;
+            }
+
+            .banner-slide p.title1 {
+                font-size: 30px !important;
+            }
+
+            .banner-slide p.title2 {
+                font-size: 25px !important;
+            }
+
+            .banner-slide p.title3 {
+                font-size: 14px !important;
+                padding: 0 20px;
             }
         }
 
@@ -305,7 +419,6 @@
         .cases-grid {
             max-width: 1200px;
             margin: auto;
-
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 25px;
@@ -336,16 +449,12 @@
             position: absolute;
             left: 0;
             top: 0;
-
             width: 100%;
             height: 100%;
-
             background: rgba(0, 0, 0, 0.5);
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -378,6 +487,10 @@
         @media(max-width:768px) {
             .cases-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .cases-title h2 {
+                font-size: 28px;
             }
         }
 
@@ -467,18 +580,14 @@
             color: white;
             font-size: 20px;
             cursor: pointer;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
             /* 默认隐藏 */
             opacity: 0;
             visibility: hidden;
             transform: translateY(10px);
-
             transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
         }
 
@@ -517,6 +626,11 @@
             margin-bottom: 15px;
             font-size: 16px;
             font-weight: bold;
+        }
+
+        .footer-column h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
         }
 
         .footer-column ul {
@@ -733,6 +847,10 @@
             .news-container {
                 grid-template-columns: 1fr;
             }
+
+            .news-title h2 {
+                font-size: 28px;
+            }
         }
 
         /* 联系我们模块 */
@@ -790,18 +908,14 @@
         }
 
         .contact-form form {
-            display: flex;
-            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
         }
 
         .contact-form input,
         .contact-form textarea {
-            margin-bottom: 20px;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            transition: 0.3s;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .contact-form input:focus,
@@ -833,6 +947,21 @@
             .contact-container {
                 flex-direction: column;
             }
+
+            .contact-info {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+
+            .contact-info h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media(max-width:900px) {
+            .contact-form form {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
@@ -843,12 +972,9 @@
             <img alt="主页导航栏logo" src="img/logo/logo-h-t-1.png" />
         </div>
         <div class="hamburger" id="hamburger">
-            <div>
-            </div>
-            <div>
-            </div>
-            <div>
-            </div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
         <nav id="navMenu">
             <a class="active" href="index.html">首页</a>
@@ -860,8 +986,7 @@
         </nav>
         <div class="tel">
             <div class="phone-icon">
-                <i class="fa-solid fa-phone" style="color: rgb(255, 127, 63);">
-                </i>
+                <i class="fa-solid fa-phone" style="color: rgb(255, 127, 63);"></i>
             </div>
             <span>18221318431</span>
         </div>
@@ -869,7 +994,7 @@
     <section class="banner" id="home">
         <div class="banner-slide active" style="background-image: url('img/banner/banner1.jpg');">
             <p class="title1" style="font-size: 70px; margin: 0 auto;">
-                5年资深网站建设经验
+                15年资深网站建设经验
             </p>
             <p class="title2" style="font-size: 60px; margin: 0 auto; color: #FF7F3F;">
                 WEBSITE DESIGN
@@ -911,8 +1036,7 @@
         <div class="service-card card-hover" onclick="location.href='services.html'"
             style="background: linear-gradient(135deg, #e6f0ff, #ffffff); border-top: 4px solid #4D6BFF;">
             <div class="service-icon" style="color:#4D6BFF;">
-                <i class="fa-solid fa-laptop-code">
-                </i>
+                <i class="fa-solid fa-laptop-code"></i>
             </div>
             <h3>
                 高端网站建设
@@ -924,8 +1048,7 @@
         <div class="service-card card-hover" onclick="location.href='services.html'"
             style="background: linear-gradient(135deg, #fff0e6, #ffffff); border-top: 4px solid #FF7F3F;">
             <div class="service-icon" style="color:#FF7F3F;">
-                <i class="fa-brands fa-weixin">
-                </i>
+                <i class="fa-brands fa-weixin"></i>
             </div>
             <h3>
                 小程序开发
@@ -937,8 +1060,7 @@
         <div class="service-card card-hover" onclick="location.href='services.html'"
             style="background: linear-gradient(135deg, #e6fff6, #ffffff); border-top: 4px solid #1ABC9C;">
             <div class="service-icon" style="color:#1ABC9C;">
-                <i class="fa-solid fa-mobile-screen-button">
-                </i>
+                <i class="fa-solid fa-mobile-screen-button"></i>
             </div>
             <h3>
                 手机APP开发
@@ -950,8 +1072,7 @@
         <div class="service-card card-hover" onclick="location.href='services.html'"
             style="background: linear-gradient(135deg, #fff9e6, #ffffff); border-top: 4px solid #F1C40F;">
             <div class="service-icon" style="color:#F1C40F;">
-                <i class="fa-solid fa-industry">
-                </i>
+                <i class="fa-solid fa-industry"></i>
             </div>
             <h3>
                 工业互联网
@@ -1051,8 +1172,7 @@
         </div>
         <div class="cases-more">
             <a class="cases-btn" href="cases.html">
-                <i class="fa-solid fa-arrow-right">
-                </i>
+                <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
     </section>
@@ -1130,22 +1250,19 @@
                     如果您对我们的服务感兴趣，欢迎通过以下方式联系
                 </p>
                 <div class="info-item">
-                    <i class="fa-solid fa-phone">
-                    </i>
+                    <i class="fa-solid fa-phone"></i>
                     <span>
                         18221318431
                     </span>
                 </div>
                 <div class="info-item">
-                    <i class="fa-solid fa-envelope">
-                    </i>
+                    <i class="fa-solid fa-envelope"></i>
                     <span>
                         chengxiaohui@huixininfo.com
                     </span>
                 </div>
                 <div class="info-item">
-                    <i class="fa-solid fa-location-dot">
-                    </i>
+                    <i class="fa-solid fa-location-dot"></i>
                     <span>
                         浙江省嘉兴市平湖市总商会大厦C座1201
                     </span>
@@ -1156,7 +1273,7 @@
                 <form>
                     <input placeholder="姓名" required="" type="text" />
                     <input placeholder="联系方式" required="" type="tel" />
-                    <textarea rows="5"></textarea>
+                    <textarea placeholder="请输入您的需求..." rows="5"></textarea>
                     <button type="submit">
                         提交
                     </button>
@@ -1165,8 +1282,7 @@
         </div>
     </section>
     <button id="backTop">
-        <i class="fa-solid fa-arrow-up">
-        </i>
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
     <footer>
         <div class="footer-container">
@@ -1266,11 +1382,11 @@
                 <p class="emailaddress">
                     chengxiaohui@huixininfo.com
                 </p>
-                <img class="qrcode" src="img/huixinqrcode.jpg" />
+                <img class="qrcode" src="img/qrcode.png" />
             </div>
         </div>
         <div class="footer-bottom">
-            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a> <a href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
         </div>
     </footer>
     <script>
@@ -1279,23 +1395,77 @@
         let current = 0;
         document.getElementById('next').onclick = () => changeSlide(1);
         document.getElementById('prev').onclick = () => changeSlide(-1);
-        function changeSlide(n) { slides[current].classList.remove('active'); current = (current + n + slides.length) % slides.length; slides[current].classList.add('active'); }
+        function changeSlide(n) {
+            slides[current].classList.remove('active');
+            current = (current + n + slides.length) % slides.length;
+            slides[current].classList.add('active');
+        }
         setInterval(() => changeSlide(1), 5000);
 
-        // 移动端折叠菜单
+        // 移动端折叠菜单 - 核心修复（解决遮挡+优化交互）
         const hamburger = document.getElementById("hamburger");
         const navMenu = document.getElementById("navMenu");
-        hamburger.onclick = () => { navMenu.classList.toggle("active"); hamburger.classList.toggle("active"); }
-        navMenu.querySelectorAll('a').forEach(link => { link.onclick = () => { if (window.innerWidth < 768) { navMenu.classList.remove("active"); hamburger.classList.remove("active"); } } });
-
-        // 导航栏滚动隐藏/显示
-        let lastScroll = 0;
+        const body = document.body;
         const header = document.getElementById('header');
+
+        // 汉堡菜单点击事件（含动画+body类名控制）
+        hamburger.addEventListener('click', (event) => {
+            navMenu.classList.toggle("active");
+            hamburger.classList.toggle("active");
+            body.classList.toggle("nav-active");
+            // 阻止事件冒泡
+            event.stopPropagation();
+        });
+
+        // 点击导航链接关闭菜单
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    navMenu.classList.remove("active");
+                    hamburger.classList.remove("active");
+                    body.classList.remove("nav-active");
+                }
+            });
+        });
+
+        // 点击页面其他区域关闭菜单
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth < 768) {
+                if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                    navMenu.classList.remove("active");
+                    hamburger.classList.remove("active");
+                    body.classList.remove("nav-active");
+                }
+            }
+        });
+
+        // 窗口大小变化时重置菜单状态
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                navMenu.classList.remove("active");
+                hamburger.classList.remove("active");
+                body.classList.remove("nav-active");
+                // 恢复PC端header样式
+                header.style.position = 'sticky';
+                body.style.paddingTop = '0';
+            } else {
+                // 确保移动端header是fixed
+                header.style.position = 'fixed';
+                body.style.paddingTop = '80px';
+            }
+        });
+
+        // 导航栏滚动隐藏/显示（适配移动端）
+        let lastScroll = 0;
         window.addEventListener('scroll', () => {
             let currentScroll = window.pageYOffset;
-            if (currentScroll > lastScroll && currentScroll > 100) { // 向下
+            // 修复滚动时菜单收起
+            if (currentScroll > lastScroll && currentScroll > 100) {
                 header.classList.add('hidden');
-            } else { // 向上
+                navMenu.classList.remove("active");
+                hamburger.classList.remove("active");
+                body.classList.remove("nav-active");
+            } else {
                 header.classList.remove('hidden');
             }
             lastScroll = currentScroll;
@@ -1303,7 +1473,6 @@
 
         // 返回顶部按钮
         const backTop = document.getElementById("backTop");
-
         window.addEventListener("scroll", () => {
             if (window.pageYOffset > 300) {
                 backTop.classList.add("show");
@@ -1312,12 +1481,20 @@
             }
         });
 
-        backTop.onclick = () => {
+        backTop.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
-        };
+        });
+
+        // 初始化：确保移动端加载时样式正确
+        window.addEventListener('load', () => {
+            if (window.innerWidth < 768) {
+                header.style.position = 'fixed';
+                body.style.paddingTop = '80px';
+            }
+        });
     </script>
 </body>
 

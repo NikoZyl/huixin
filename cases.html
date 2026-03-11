@@ -9,409 +9,432 @@
     <link rel="icon" type="image/png" href="img/logo/logo64.png">
     <style>
         /* ===== 全局 ===== */
-        body {
-            margin: 0;
-            color: #4D6BFF;
-            background-color: #FFFFFF;
-        }
+body {
+    margin: 0;
+    color: #4D6BFF;
+    background-color: #FFFFFF;
+}
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
-        /* ===== 顶部导航 ===== */
-        header {
-            background-color: #FFFFFF;
-            color: #4D6BFF;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            height: 100px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: top 0.3s;
-            box-sizing: border-box;
-        }
+/* ===== 顶部导航 ===== */
+header {
+    background-color: #FFFFFF;
+    color: #4D6BFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    height: 100px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: top 0.3s;
+    box-sizing: border-box;
+}
 
-        header.hidden {
-            top: -110px;
-        }
+header.hidden {
+    top: -110px;
+}
 
-        header .logo img {
-            width: 230px;
-            height: 130px;
-        }
+header .logo img {
+    width: 230px;
+    height: 130px;
+}
 
-        header nav {
-            font-size: 20px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+header nav {
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-        header nav a {
-            margin: 0 12px;
-            font-weight: bold;
-            position: relative;
-            display: inline-block;
-            padding: 35px 5px;
-        }
+header nav a {
+    margin: 0 12px;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    padding: 35px 5px;
+}
 
-        header nav a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: #FF7F3F;
-            transition: width .3s ease;
-        }
+header nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background: #FF7F3F;
+    transition: width .3s ease;
+}
 
-        header nav a:hover {
-            color: #FF7F3F;
-        }
+header nav a:hover {
+    color: #FF7F3F;
+}
 
-        header nav a:hover::after {
-            width: 100%;
-        }
+header nav a:hover::after {
+    width: 100%;
+}
 
-        header nav a.active {
-            color: #FF7F3F;
-        }
+header nav a.active {
+    color: #FF7F3F;
+}
 
-        header nav a.active::after {
-            width: 100%;
-        }
+header nav a.active::after {
+    width: 100%;
+}
 
-        .tel {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            font-size: 18px;
-            color: #FF7F3F;
-        }
+.tel {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #FF7F3F;
+}
 
-        /* 汉堡菜单 */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
-        }
+/* 汉堡菜单 */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1001;
+}
 
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: #4D6BFF;
-            margin: 4px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #4D6BFF;
+    margin: 4px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
 
-        .hamburger.active div:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
+.hamburger.active div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
 
-        .hamburger.active div:nth-child(2) {
-            opacity: 0;
-        }
+.hamburger.active div:nth-child(2) {
+    opacity: 0;
+}
 
-        .hamburger.active div:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
+.hamburger.active div:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
 
-        /* ===== 移动端导航 ===== */
-        @media(max-width:768px) {
-            header {
-                padding: 0 15px;
-                height: 80px;
-                position: fixed;
-                width: 100%;
-            }
+/* ===== 移动端导航 ===== */
+@media(max-width:768px) {
+    header {
+        padding: 0 15px;
+        height: 80px;
+        position: fixed;
+        width: 100%;
+    }
 
-            body {
-                padding-top: 80px;
-            }
+    body {
+        padding-top: 80px;
+    }
 
-            header .logo img {
-                width: 150px;
-                height: 80px;
-            }
+    header .logo img {
+        width: 150px;
+        height: 80px;
+    }
 
-            header .tel {
-                display: none;
-            }
+    header .tel {
+        display: none;
+    }
 
-            header nav {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                background: #fff;
-                position: fixed;
-                top: 80px;
-                left: 0;
-                right: 0;
-                padding: 0;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                z-index: 999;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height .3s ease;
-            }
+    header nav {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background: #fff;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        padding: 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+    }
 
-            header nav.active {
-                max-height: 500px;
-            }
+    header nav.active {
+        max-height: 500px;
+    }
 
-            header nav a {
-                display: block;
-                padding: 15px 20px;
-                margin: 0;
-                text-align: center;
-                border-bottom: 1px solid #f5f5f5;
-            }
+    header nav a {
+        display: block;
+        padding: 15px 20px;
+        margin: 0;
+        text-align: center;
+        border-bottom: 1px solid #f5f5f5;
+    }
 
-            header nav a::after {
-                display: none;
-            }
+    header nav a::after {
+        display: none;
+    }
 
-            .hamburger {
-                display: flex;
-            }
-        }
+    .hamburger {
+        display: flex;
+    }
+}
 
-        /* ===== 返回顶部 ===== */
-        #backTop {
-            position: fixed;
-            right: 30px;
-            bottom: 100px;
-            width: 50px;
-            height: 50px;
-            border: none;
-            border-radius: 50%;
-            background: #FF7F3F;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: opacity .4s ease, transform .4s ease;
-            z-index: 9999;
-        }
+/* ===== 返回顶部 ===== */
+#backTop {
+    position: fixed;
+    right: 30px;
+    bottom: 100px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: #FF7F3F;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease;
+    z-index: 9999;
+}
 
-        #backTop.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+#backTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 
-        #backTop:hover {
-            background: #e66a2d;
-        }
+#backTop:hover {
+    background: #e66a2d;
+}
 
-        /* ===== 案例 Hero Banner ===== */
-        .case-hero {
-            height: 420px;
-            background: linear-gradient(135deg, #4D6BFF, #1b1d3c);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
+/* ===== 案例 Hero Banner ===== */
+.case-hero {
+    height: 420px;
+    background: linear-gradient(135deg, #4D6BFF, #1b1d3c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        .case-hero::before {
-            content: "";
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, #6f85ff, transparent);
-            top: -200px;
-            left: -200px;
-            opacity: .3;
-        }
+.case-hero::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #6f85ff, transparent);
+    top: -200px;
+    left: -200px;
+    opacity: .3;
+}
 
-        .case-hero::after {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #ff7f3f, transparent);
-            bottom: -200px;
-            right: -200px;
-            opacity: .25;
-        }
+.case-hero::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #ff7f3f, transparent);
+    bottom: -200px;
+    right: -200px;
+    opacity: .25;
+}
 
-        .hero-content {
-            text-align: center;
-            color: #fff;
-            z-index: 2;
-        }
+.hero-content {
+    text-align: center;
+    color: #fff;
+    z-index: 2;
+}
 
-        .hero-content h1 {
-            font-size: 60px;
-            letter-spacing: 4px;
-            margin: 0;
-        }
+.hero-content h1 {
+    font-size: 60px;
+    letter-spacing: 4px;
+    margin: 0;
+}
 
-        .hero-content p {
-            font-size: 18px;
-            margin-top: 10px;
-            opacity: .9;
-        }
+.hero-content p {
+    font-size: 18px;
+    margin-top: 10px;
+    opacity: .9;
+}
 
-        /* ===== 案例区 ===== */
-        .case-container {
-            max-width: 1200px;
-            margin: -120px auto 80px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 5;
-        }
+/* ===== 案例区 ===== */
+.case-container {
+    max-width: 1200px;
+    margin: -120px auto 80px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}
 
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-        }
+.case-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
 
-        .case-card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
-            transition: .35s;
-            transform: rotate(-1deg);
-        }
+.case-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+    transition: .35s;
+}
 
-        .case-card:nth-child(even) {
-            transform: rotate(1deg);
-        }
+.case-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .2);
+}
 
-        .case-card img {
-            width: 100%;
-            display: block;
-        }
+.case-card h3 {
+    font-size: 18px;
+    color: #1b1d3c;
+    margin: 12px 15px 5px 15px;
+}
 
-        .case-card h3 {
-            font-size: 16px;
-            margin: 15px;
-            color: #1b1d3c;
-        }
+.case-card p {
+    font-size: 14px;
+    color: #555;
+    margin: 0 15px 15px 15px;
+}
 
-        .case-card:hover {
-            transform: translateY(-12px) rotate(0deg);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, .2);
-        }
+/* 多图切换 */
+.case-image {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
 
-        /* ===== 响应式 ===== */
-        @media(max-width:1024px) {
-            .case-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+.case-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.5s ease-in-out;
+}
 
-            .hero-content h1 {
-                font-size: 42px;
-            }
-        }
+.case-image img:not(:first-child) {
+    opacity: 0;
+}
 
-        @media(max-width:768px) {
-            .case-grid {
-                grid-template-columns: 1fr;
-            }
+/* 悬停切换图片 */
+.case-card:hover .case-image img {
+    opacity: 0;
+}
 
-            .case-container {
-                margin-top: -80px;
-            }
+.case-card:hover .case-image img:nth-child(2) {
+    opacity: 1;
+}
 
-            .hero-content h1 {
-                font-size: 32px;
-            }
-        }
+/* ===== 响应式 ===== */
+@media(max-width:1024px) {
+    .hero-content h1 {
+        font-size: 42px;
+    }
+    .case-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .footer-column {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
 
-        /* ===== footer ===== */
-        footer {
-            background-color: #1b1d3c;
-            color: #fff;
-            font-size: 14px;
-            padding: 50px 10% 20px;
-            box-sizing: border-box;
-        }
+@media(max-width:768px) {
+    .hero-content h1 {
+        font-size: 32px;
+    }
+    .case-grid {
+        grid-template-columns: 1fr;
+    }
+    .case-container {
+        margin-top: -80px;
+    }
+    .case-image {
+        height: 200px;
+    }
+}
 
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            margin: auto;
-            max-width: 1200px;
-        }
+/* ===== footer ===== */
+footer {
+    background-color: #1b1d3c;
+    color: #fff;
+    font-size: 14px;
+    padding: 50px 10% 20px;
+    box-sizing: border-box;
+}
 
-        .footer-column {
-            flex: 1 1 150px;
-            margin: 10px;
-        }
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: auto;
+    max-width: 1200px;
+}
 
-        .footer-column h2 {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
+.footer-column {
+    flex: 1 1 150px;
+    margin: 10px;
+}
 
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+.footer-column h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
 
-        .footer-column ul li {
-            margin-bottom: 8px;
-        }
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .footer-contact .phone-number {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 5px 0;
-        }
+.footer-column ul li {
+    margin-bottom: 8px;
+}
 
-        .footer-contact .address,
-        .footer-contact .emailaddress {
-            font-size: 13px;
-        }
+.footer-contact .phone-number {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+}
 
-        .qrcode {
-            width: 100px;
-            height: 100px;
-        }
+.footer-contact .address,
+.footer-contact .emailaddress {
+    font-size: 13px;
+}
 
-        .footer-bottom {
-            text-align: left;
-            font-size: 12px;
-            color: #aaa;
-            margin: 0;
-            padding-left: 11%;
-            padding-top: 10px;
-        }
+.qrcode {
+    width: 100px;
+    height: 100px;
+}
 
-        @media(max-width:1024px) {
-            .footer-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .footer-column {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-        }
+.footer-bottom {
+    text-align: left;
+    font-size: 12px;
+    color: #aaa;
+    margin: 0;
+    padding-left: 11%;
+    padding-top: 10px;
+}
     </style>
 </head>
 
@@ -449,52 +472,101 @@
     </section>
 
     <section class="case-container">
+    <div class="case-grid">
 
-        <div class="case-grid">
-
-            <div class="case-card">
-                <img src="img/cases/case1.png">
-                <h3>房产系统</h3>
+        <!-- 案例卡片示例 -->
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case1-1.png" alt="自动化流水线数据追溯系统1">
+                <img src="img/cases/case1-2.png" alt="自动化流水线数据追溯系统2">
             </div>
-
-            <div class="case-card">
-                <img src="img/cases/case2.png">
-                <h3>教育系统</h3>
-            </div>
-
-            <div class="case-card">
-                <img src="img/cases/case3.png">
-                <h3>预约咨询小程序</h3>
-            </div>
-
-            <div class="case-card">
-                <img src="img/cases/case4.png">
-                <h3>招聘SAAS</h3>
-            </div>
-
-            <div class="case-card">
-                <img src="img/cases/case5.png">
-                <h3>答题考试系统</h3>
-            </div>
-
-            <div class="case-card">
-                <img src="img/cases/case6.png">
-                <h3>活动报名系统</h3>
-            </div>
-
-            <div class="case-card">
-                <img src="img/cases/case7.png">
-                <h3>球馆订场系统</h3>
-            </div>
-
-            <div class="case-card">
-                <img src="img/cases/case8.png">
-                <h3>CRM客户系统</h3>
-            </div>
-
+            <h3>自动化流水线数据追溯系统</h3>
+            <p>该自动化流水线数据追溯系统不仅提高了汽车零部件生产的透明度和可追溯性，还有助于企业提高生产效率、降低成本、增强市场竞争力。在未来的发展中，我们将继续优化和完善系统功能，为汽车零部件生产行业提供更加全面、高效、可靠的追溯解决方案。</p>
         </div>
 
-    </section>
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case2-1.png" alt="WMS仓储管理系统1">
+                <img src="img/cases/case2-2.png" alt="WMS仓储管理系统2">
+            </div>
+            <h3>WMS仓储管理系统</h3>
+            <p>WMS系统的应用体现在库位管理、数据分析、车型管理、订单发运和报警管理等多个方面，能够帮助企业实现仓库的高效、精准、智能化管理。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case3-1.png" alt="VW421座垫测试">
+                <img src="img/cases/case3-2.png" alt="主驾电动坐垫骨架装配系统">
+            </div>
+            <h3>LabVIEW项目案例</h3>
+            <p>VW421 副驾电动 6 向座垫“一站式自动测试系统”的监控界面，运行于 LabVIEW 平台（MAIN.vi）。系统通过 PLC＋PC 协同控制，对座垫的水平、前后、上下六个方向的运动进行功能与品质检测，实时采集电流、分贝、速度及霍尔位置信号，并与预设上下限自动比对。界面同时显示流水号、节拍、测试配置、结果判定（OK/NG）以及人工复检入口；所有数据自动归档到 SQL 数据库，支持远程查询与追溯。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case4.png" alt="数字生产看板1">
+                <img src="img/cases/case4.png" alt="数字生产看板2">
+            </div>
+            <h3>数字生产看板</h3>
+            <p>生产数字看板用于展示车间设备稼动情况和生产情况。看板内容包括车间人员信息，机种数据，生产数量，稼动率，设备停时间，公休时间，不良品数量等。通过实时反馈设备运行情况及生产信息，自动计算数据生成统计报表，以全局的视角掌握生产进度，助力企业提高效率降低成本。<br>由系统自动识别机种的内部数据变化及当前班次的实时生产数。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case5.png" alt="预约咨询小程序1">
+                <img src="img/cases/case5.png" alt="预约咨询小程序2">
+            </div>
+            <h3>预约咨询小程序</h3>
+            <p>包含在线咨询、视频咨询、电话咨询、面询多种咨询方式，适用于心理、法律、宠物等预约咨询问诊场景。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case6.png" alt="WGO商城1">
+                <img src="img/cases/case6.png" alt="WGO商城2">
+            </div>
+            <h3>WGO商城</h3>
+            <p>该款单商户商城软件将助力各行业商户轻松搭建线上购物平台，实现线上线下融合，提升业务竞争力。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case7.png" alt="CRM客户关系管理系统1">
+                <img src="img/cases/case7.png" alt="CRM客户关系管理系统2">
+            </div>
+            <h3>CRM客户关系管理系统</h3>
+            <p>提供客户管理、商机需求、合同管理、商品管理、审批流程、数据分析、业绩设定、自定义字段等功能。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case8.png" alt="AI智能台球1">
+                <img src="img/cases/case8.png" alt="AI智能台球2">
+            </div>
+            <h3>AI智能台球</h3>
+            <p>无人球房具有获客简单和投资成本低等明显优势，智能化数字化经营，低成本高收益回本还快，前景一片光明。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case9-1.png" alt="AI智能台球1">
+                <img src="img/cases/case9-2.png" alt="AI智能台球2">
+            </div>
+            <h3>悦享境自助棋牌室管理系统</h3>
+            <p>自助预约小程序、智能设备控制自助小程序功能：卡券、积分、活动、团购、会员、分销、保洁端<br>智能设备控制：智能设备与房间订单联动，支持智能网关、电源、门禁、智能语音播报等设备。</p>
+        </div>
+
+        <div class="case-card">
+            <div class="case-image">
+                <img src="img/cases/case10.png" alt="答题考试系统1">
+                <img src="img/cases/case10.png" alt="答题考试系统2">
+            </div>
+            <h3>答题考试系统</h3>
+            <p>本答题考试系统支持判断、单选、多选等多题型及三种难度，可通过 Excel 批量导入试题，支持随机组卷、模拟考试、限时考试与统一考场考试，还能收藏试题、统计成绩排行，满足各类考试场景需求。</p>
+        </div>
+
+    </div>
+</section>
 
     <button id="backTop">
         <i class="fa-solid fa-arrow-up"></i>

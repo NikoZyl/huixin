@@ -466,6 +466,11 @@
             font-weight: bold;
         }
 
+        .footer-column h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
         .footer-column ul {
             list-style: none;
             padding: 0;
@@ -482,7 +487,10 @@
             margin: 5px 0;
         }
 
-        .footer-contact .address,
+        .footer-contact .address {
+            font-size: 13px;
+        }
+
         .footer-contact .emailaddress {
             font-size: 13px;
         }
@@ -499,6 +507,19 @@
             margin: 0;
             padding-left: 11%;
             padding-top: 10px;
+        }
+
+        /* 响应式布局 */
+        @media(max-width:1024px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-column {
+                width: 100%;
+                margin-bottom: 20px;
+            }
         }
 
         /* ---------- 响应式调整 ---------- */
@@ -665,61 +686,107 @@
     <footer>
         <div class="footer-container">
             <div class="footer-column">
-                <h2>关于辉信</h2>
+                <h2>
+                    关于辉信
+                </h2>
                 <a href="about.html">
                     <ul>
-                        <li>我们是谁</li>
-                        <li>我们服务的客户</li>
-                        <li>我们的团队</li>
+                        <li>
+                            我们是谁
+                        </li>
+                        <li>
+                            我们服务的客户
+                        </li>
+                        <li>
+                            我们的团队
+                        </li>
                     </ul>
                 </a>
             </div>
             <div class="footer-column">
-                <h2>辉信服务</h2>
+                <h2>
+                    辉信服务
+                </h2>
                 <a href="services.html">
                     <ul>
-                        <li>网站建设</li>
-                        <li>H5响应式 交互网站</li>
-                        <li>移动端 & 微网站定制</li>
-                        <li>服务流程</li>
-                        <li>行业解决方案</li>
+                        <li>
+                            网站建设
+                        </li>
+                        <li>
+                            H5响应式 交互网站
+                        </li>
+                        <li>
+                            移动端 &amp; 微网站定制
+                        </li>
+                        <li>
+                            服务流程
+                        </li>
+                        <li>
+                            行业解决方案
+                        </li>
                     </ul>
                 </a>
             </div>
             <div class="footer-column">
-                <h2>产品案例</h2>
+                <h2>
+                    产品案例
+                </h2>
                 <a href="cases.html">
                     <ul>
-                        <li>移动微站</li>
-                        <li>平台电商</li>
-                        <li>HTML5</li>
-                        <li>企业网站</li>
-                        <li>加工制造</li>
-                        <li>酒店餐饮</li>
+                        <li>
+                            移动微站
+                        </li>
+                        <li>
+                            平台电商
+                        </li>
+                        <li>
+                            HTML5
+                        </li>
+                        <li>
+                            企业网站
+                        </li>
+                        <li>
+                            加工制造
+                        </li>
+                        <li>
+                            酒店餐饮
+                        </li>
                     </ul>
                 </a>
             </div>
             <div class="footer-column">
-                <h2>辉信动态</h2>
+                <h2>
+                    辉信动态
+                </h2>
                 <a href="news.html">
                     <ul>
-                        <li>公司动态</li>
+                        <li>
+                            公司动态
+                        </li>
                     </ul>
                 </a>
             </div>
             <div class="footer-column footer-contact">
                 <a href="contact.html">
-                    <h2>联系我们</h2>
+                    <h2>
+                        联系我们
+                    </h2>
                 </a>
-                <p class="phone-number">18221318431</p>
-                <p class="address">浙江省嘉兴市平湖市总商会大厦C座1201</p>
-                <p class="emailaddress">chengxiaohui@huixininfo.com</p>
-                <img src="img/huixinqrcode.jpg" class="qrcode">
+                <p class="phone-number">
+                    18221318431
+                </p>
+                <p class="address">
+                    浙江省嘉兴市平湖市总商会大厦C座1201
+                </p>
+                <p class="emailaddress">
+                    chengxiaohui@huixininfo.com
+                </p>
+                <img class="qrcode" src="img/qrcode.png">
             </div>
         </div>
         <div class="footer-bottom">
-            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a> <a
-                href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
+            Copyright © 2001-2029 嘉兴辉信信息科技有限公司 版权所有 <a href="https://beian.miit.gov.cn/">工信部备案号：浙ICP备18006137号</a>
+            <a href="https://beian.mps.gov.cn/">公网安备号：浙公网安备33048202008837</a>
         </div>
     </footer>
 
